@@ -2,6 +2,7 @@ import numpy as np
 import tushare as ts
 from hmm_model import HmmModel
 import pandas as pd
+import codecs
 
 
 stock_code = '000001.SZ'
@@ -10,7 +11,9 @@ start_date_train = '20150101'
 end_date_train = '20181231'
 
 # 导入金融数据
-ts.set_token('94fb9d6bf6205a73f0337eb7d397be9911e06eaf902cb2074bc36e9b')
+with codecs.open('token.txt','rb','utf-8') as f:
+    token = f.read()
+ts.set_token(token)
 pro = ts.pro_api()
 quotes = ts.pro_bar(ts_code=stock_code, start_date=start_date_train, end_date=end_date_train, adj='qfq')  # 前复权
 #直接保存

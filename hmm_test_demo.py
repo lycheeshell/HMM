@@ -3,6 +3,7 @@ import tushare as ts
 from hmmlearn.hmm import GaussianHMM
 from sklearn.preprocessing import scale
 import matplotlib.pyplot as plt
+import codecs
 
 state_num = 10
 sample_len = 5
@@ -11,7 +12,9 @@ start_date = '20110101'
 end_date = '20181231'
 
 # 导入金融数据
-ts.set_token('94fb9d6bf6205a73f0337eb7d397be9911e06eaf902cb2074bc36e9b')
+with codecs.open('token.txt','rb','utf-8') as f:
+    token = f.read()
+ts.set_token(token)
 pro = ts.pro_api()
 quotes = ts.pro_bar(ts_code=stock_code, start_date=start_date, end_date=end_date, adj='qfq')  # 前复权
 X1 = np.array([q for q in reversed(quotes['pct_chg'])])  # 涨跌幅
